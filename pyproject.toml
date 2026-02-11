@@ -24,7 +24,7 @@ packages = [
 project = "main:main" 
 
 [tool.ruff]
-line-length = 88
+line-length = 140
 target-version = "py311"
 exclude = ["venv", ".venv", "dist", "__pycache__"]
 

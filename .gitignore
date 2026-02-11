@@ -4,3 +4,5 @@ __pycache__/
 .DS_Store
 poetry.lock
 .ruff_cache/
+valutatrade_hub/__pycache__/
+valutatrade_hub/cli/__pycache__/
