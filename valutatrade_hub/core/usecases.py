@@ -11,7 +11,6 @@ from valutatrade_hub.core.models import Wallet
 from valutatrade_hub.decorators import log_action
 from valutatrade_hub.infra.settings import SettingsLoader
 
-
 SETTINGS = SettingsLoader()
 
 
@@ -218,7 +217,7 @@ def buy(
     _save_portfolios(portfolios)
 
     rates, _ = _ensure_rates_fresh()
-    base_ccy = (base.strip().upper() if isinstance(base, str) and base.strip() else _base_currency())
+    base_ccy = base.strip().upper() if isinstance(base, str) and base.strip() else _base_currency()
     if base_ccy not in rates:
         base_ccy = "USD"
     if code not in rates or rates[base_ccy] == 0:
@@ -287,7 +286,7 @@ def sell(
     _save_portfolios(portfolios)
 
     rates, _ = _ensure_rates_fresh()
-    base_ccy = (base.strip().upper() if isinstance(base, str) and base.strip() else _base_currency())
+    base_ccy = base.strip().upper() if isinstance(base, str) and base.strip() else _base_currency()
     if base_ccy not in rates:
         base_ccy = "USD"
     if code not in rates or rates[base_ccy] == 0:

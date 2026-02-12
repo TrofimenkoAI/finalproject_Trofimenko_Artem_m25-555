@@ -1,7 +1,8 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from valutatrade_hub.core.exceptions import CurrencyNotFoundError
 
+from abc import ABC, abstractmethod
+
+from valutatrade_hub.core.exceptions import CurrencyNotFoundError
 
 
 class Currency(ABC):

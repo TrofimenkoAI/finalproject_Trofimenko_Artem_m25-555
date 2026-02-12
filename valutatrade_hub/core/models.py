@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import hashlib
 from datetime import datetime
-from valutatrade_hub.core.exceptions import InsufficientFundsError
 
+from valutatrade_hub.core.exceptions import InsufficientFundsError
 
 
 class User:
@@ -155,9 +156,9 @@ class Wallet:
             raise InsufficientFundsError(available=available, required=required, code=code)
         self._balance = self._balance - amount
 
-
     def get_balance_info(self) -> dict:
         return {"currency_code": self._currency_code, "balance": self._balance}
+
 
 class Portfolio:
     def __init__(self, user: User, wallets: dict[str, Wallet] | None = None):

@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from datetime import datetime
 from functools import wraps
-from typing import Any, Callable
+from typing import Callable
 
 
 def log_action(action: str, verbose: bool = False) -> Callable:
@@ -64,9 +64,7 @@ def log_action(action: str, verbose: bool = False) -> Callable:
                         else:
                             extra = f" balance={float(before):.2f}→{float(after):.2f}"
 
-                logger.info(
-                    f"{ts} {act} {_fmt_user()} {_fmt_ccy()} {_fmt_amount()}{_fmt_rate_base()} result=OK{extra}"
-                )
+                logger.info(f"{ts} {act} {_fmt_user()} {_fmt_ccy()} {_fmt_amount()}{_fmt_rate_base()} result=OK{extra}")
                 return result
             except Exception as e:
                 err_type = type(e).__name__

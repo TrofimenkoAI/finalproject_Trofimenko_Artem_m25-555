@@ -4,10 +4,14 @@ import json
 import secrets
 from datetime import datetime, timedelta
 from pathlib import Path
+
 from valutatrade_hub.core.exceptions import ApiRequestError, CurrencyNotFoundError, InsufficientFundsError
-from valutatrade_hub.core.usecases import buy as uc_buy, sell as uc_sell
+from valutatrade_hub.core.usecases import buy as uc_buy
+from valutatrade_hub.core.usecases import get_rate as uc_get_rate
+from valutatrade_hub.core.usecases import sell as uc_sell
+from valutatrade_hub.infra.settings import SettingsLoader
 
-
+SETTINGS = SettingsLoader()
 
 
 def _project_root() -> Path:
@@ -262,27 +266,28 @@ def buy(currency: str, amount: float) -> str:
     if amount <= 0:
         return "'amount' должен быть положительным числом"
 
-    rates = _exchange_rates()
-    base = "USD"
-    if c not in rates or base not in rates:
-        return f"Не удалось получить курс для {c}→{base}"
+    base = SETTINGS.get("BASE_CURRENCY", "USD")
+    if not isinstance(base, str) or not base.strip():
+        base = "USD"
+    base = base.strip().upper()
 
     result = uc_buy(
         user_id=user_id,
         username=username,
         currency_code=c,
         amount=amount,
-        base="USD",
+        base=base,
     )
-    rate = float(result.get("rate", 0.0))
 
+    code = str(result.get("currency_code", c)).upper()
+    rate = float(result.get("rate", 0.0))
+    used_base = str(result.get("base", base)).upper()
+    cost = result.get("estimated_cost", None)
 
     old_balance = float(result.get("before_balance", 0.0))
     new_balance = float(result.get("after_balance", 0.0))
 
-    cost = amount * rate
-
-    if c in ("BTC", "ETH"):
+    if code in ("BTC", "ETH"):
         a_str = f"{amount:.4f}"
         old_str = f"{old_balance:.4f}"
         new_str = f"{new_balance:.4f}"
@@ -291,12 +296,18 @@ def buy(currency: str, amount: float) -> str:
         old_str = f"{old_balance:.2f}"
         new_str = f"{new_balance:.2f}"
 
+    cost_str = ""
+    if isinstance(cost, (int, float)):
+        cost_str = f"{float(cost):,.2f} {used_base}"
+
     lines = [
-        f"Покупка выполнена: {a_str} {c} по курсу {rate:.2f} {base}/{c}",
+        f"Покупка выполнена: {a_str} {code}",
+        f"Курс: {rate:.8f} {used_base}/{code}",
         "Изменения в портфеле:",
-        f"- {c}: было {old_str} → стало {new_str}",
-        f"Оценочная стоимость покупки: {cost:,.2f} {base}",
+        f"- {code}: было {old_str} → стало {new_str}",
     ]
+    if cost_str:
+        lines.append(f"Оценочная стоимость: {cost_str}")
     return "\n".join(lines)
 
 
@@ -319,27 +330,28 @@ def sell(currency: str, amount: float) -> str:
     if amount <= 0:
         return "'amount' должен быть положительным числом"
 
-    rates = _exchange_rates()
-    base = "USD"
-    if c not in rates or base not in rates:
-        return f"Не удалось получить курс для {c}→{base}"
+    base = SETTINGS.get("BASE_CURRENCY", "USD")
+    if not isinstance(base, str) or not base.strip():
+        base = "USD"
+    base = base.strip().upper()
 
     result = uc_sell(
         user_id=user_id,
         username=username,
         currency_code=c,
         amount=amount,
-        base="USD",
+        base=base,
     )
-    rate = float(result.get("rate", 0.0))
 
+    code = str(result.get("currency_code", c)).upper()
+    rate = float(result.get("rate", 0.0))
+    used_base = str(result.get("base", base)).upper()
+    revenue = result.get("estimated_revenue", None)
 
     old_balance = float(result.get("before_balance", 0.0))
     new_balance = float(result.get("after_balance", 0.0))
 
-    revenue = amount * rate
-
-    if c in ("BTC", "ETH"):
+    if code in ("BTC", "ETH"):
         a_str = f"{amount:.4f}"
         old_str = f"{old_balance:.4f}"
         new_str = f"{new_balance:.4f}"
@@ -348,12 +360,18 @@ def sell(currency: str, amount: float) -> str:
         old_str = f"{old_balance:.2f}"
         new_str = f"{new_balance:.2f}"
 
+    rev_str = ""
+    if isinstance(revenue, (int, float)):
+        rev_str = f"{float(revenue):,.2f} {used_base}"
+
     lines = [
-        f"Продажа выполнена: {a_str} {c} по курсу {rate:.2f} {base}/{c}",
+        f"Продажа выполнена: {a_str} {code}",
+        f"Курс: {rate:.8f} {used_base}/{code}",
         "Изменения в портфеле:",
-        f"- {c}: было {old_str} → стало {new_str}",
-        f"Оценочная выручка: {revenue:,.2f} {base}",
+        f"- {code}: было {old_str} → стало {new_str}",
     ]
+    if rev_str:
+        lines.append(f"Оценочная выручка: {rev_str}")
     return "\n".join(lines)
 
 
@@ -410,11 +428,7 @@ def get_rate(from_currency: str, to_currency: str) -> str:
             raise ApiRequestError(str(e))
 
     inv = 1.0 / rate if rate != 0 else 0.0
-    return (
-        f"Курс {f}→{t}: {rate:.8f} (обновлено: {_format_dt(updated_at)})\n"
-        f"Обратный курс {t}→{f}: {inv:.2f}"
-    )
-
+    return f"Курс {f}→{t}: {rate:.8f} (обновлено: {_format_dt(updated_at)})\nОбратный курс {t}→{f}: {inv:.2f}"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -455,7 +469,6 @@ def build_parser() -> argparse.ArgumentParser:
     p_rate.add_argument("--to", dest="to_opt", default=None)
 
     return parser
-
 
 
 def _pick_arg(primary, opt):
@@ -512,7 +525,15 @@ def execute(args) -> str:
             t = _pick_arg(getattr(args, "to_currency", None), getattr(args, "to_opt", None))
             if not f or not t:
                 return "Использование: get-rate --from <code> --to <code>"
-            return get_rate(f, t)
+
+            data = uc_get_rate(f, t)
+            rate = float(data["rate"])
+            updated_at = str(data["updated_at"])
+            fc = str(data["from"])
+            tc = str(data["to"])
+
+            inv = 1.0 / rate if rate != 0 else 0.0
+            return f"Курс {fc}→{tc}: {rate:.8f} (обновлено: {updated_at})\nОбратный курс {tc}→{fc}: {inv:.8f}"
 
         raise ValueError("unknown command")
     except InsufficientFundsError as e:
