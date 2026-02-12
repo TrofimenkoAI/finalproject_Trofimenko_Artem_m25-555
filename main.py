@@ -2,10 +2,14 @@ import shlex
 import sys
 
 from valutatrade_hub.cli.interface import build_parser, execute
+from valutatrade_hub.logging_config import configure_logging
+
 
 
 def main(argv=None) -> None:
+    configure_logging()
     parser = build_parser()
+
 
     if argv is None:
         argv = sys.argv[1:]

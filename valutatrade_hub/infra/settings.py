@@ -31,7 +31,7 @@ class SettingsLoader:
         self.__class__._loaded = True
 
     def _project_root(self) -> Path:
-        return Path(__file__).resolve().parents[3]
+        return Path(__file__).resolve().parents[2]
 
     def _read_pyproject(self) -> dict[str, Any]:
         root = self._project_root()

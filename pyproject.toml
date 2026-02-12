@@ -24,7 +24,7 @@ packages = [
 project = "main:main" 
 
 [tool.ruff]
-line-length = 140
+line-length = 155
 target-version = "py311"
 exclude = ["venv", ".venv", "dist", "__pycache__"]
 
@@ -34,3 +34,16 @@ ignore = []
 
 [tool.poetry.group.dev.dependencies]
 ruff = ">=0.14.10,<0.15.0"
+
+[tool.valutatrade]
+DATA_DIR = "data"
+USERS_JSON = "data/users.json"
+PORTFOLIOS_JSON = "data/portfolios.json"
+RATES_JSON = "data/rates.json"
+SESSION_JSON = "data/session.json"
+RATES_TTL_SECONDS = 300
+BASE_CURRENCY = "USD"
+LOG_DIR = "logs"
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "%(levelname)s %(asctime)s %(message)s"
+

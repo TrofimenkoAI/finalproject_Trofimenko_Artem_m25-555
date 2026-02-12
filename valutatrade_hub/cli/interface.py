@@ -5,11 +5,13 @@ import secrets
 from datetime import datetime, timedelta
 from pathlib import Path
 from valutatrade_hub.core.exceptions import ApiRequestError, CurrencyNotFoundError, InsufficientFundsError
+from valutatrade_hub.core.usecases import buy as uc_buy, sell as uc_sell
+
 
 
 
 def _project_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    return Path(__file__).resolve().parents[2]
 
 
 def _data_dir() -> Path:
@@ -129,7 +131,7 @@ def register(username: str, password: str) -> str:
     portfolios.append({"user_id": user_id, "wallets": {}})
     _write_json(portfolios_path, portfolios)
 
-    return f"Пользователь '{username}' зарегистрирован (id={user_id}). Войдите: login --username {username} --password ****"
+    return f"Пользователь '{username}' зарегистрирован. Войдите: login --username {username} --password ****"
 
 
 def login(username: str, password: str) -> str:
@@ -265,42 +267,19 @@ def buy(currency: str, amount: float) -> str:
     if c not in rates or base not in rates:
         return f"Не удалось получить курс для {c}→{base}"
 
-    portfolios_path = _data_dir() / "portfolios.json"
-    portfolios = _read_json_list(portfolios_path)
-
-    idx = None
-    for i, p in enumerate(portfolios):
-        if isinstance(p, dict) and p.get("user_id") == user_id:
-            idx = i
-            break
-
-    if idx is None:
-        portfolios.append({"user_id": user_id, "wallets": {}})
-        idx = len(portfolios) - 1
-
-    p = portfolios[idx]
-    wallets = p.get("wallets")
-    if not isinstance(wallets, dict):
-        wallets = {}
-        p["wallets"] = wallets
-
-    entry = wallets.get(c)
-    if not isinstance(entry, dict):
-        entry = {"balance": 0.0}
-        wallets[c] = entry
-
-    old_balance = entry.get("balance", 0.0)
-    if not isinstance(old_balance, (int, float)):
-        old_balance = 0.0
-    old_balance = float(old_balance)
-
-    new_balance = old_balance + amount
-    entry["balance"] = new_balance
-
-    portfolios[idx] = p
-    _write_json(portfolios_path, portfolios)
-
     rate = float(rates[c]) / float(rates[base])
+    result = uc_buy(
+        user_id=user_id,
+        username=username,
+        currency_code=c,
+        amount=amount,
+        rate=rate,
+        base=base,
+    )
+
+    old_balance = float(result.get("before_balance", 0.0))
+    new_balance = float(result.get("after_balance", 0.0))
+
     cost = amount * rate
 
     if c in ("BTC", "ETH"):
@@ -345,48 +324,19 @@ def sell(currency: str, amount: float) -> str:
     if c not in rates or base not in rates:
         return f"Не удалось получить курс для {c}→{base}"
 
-    portfolios_path = _data_dir() / "portfolios.json"
-    portfolios = _read_json_list(portfolios_path)
-
-    idx = None
-    for i, p in enumerate(portfolios):
-        if isinstance(p, dict) and p.get("user_id") == user_id:
-            idx = i
-            break
-
-    if idx is None:
-        return f"У вас нет кошелька '{c}'. Добавьте валюту: она создаётся автоматически при первой покупке."
-
-    p = portfolios[idx]
-    wallets = p.get("wallets")
-    if not isinstance(wallets, dict):
-        return f"У вас нет кошелька '{c}'. Добавьте валюту: она создаётся автоматически при первой покупке."
-
-    entry = wallets.get(c)
-    if not isinstance(entry, dict):
-        return f"У вас нет кошелька '{c}'. Добавьте валюту: она создаётся автоматически при первой покупке."
-
-    old_balance = entry.get("balance", 0.0)
-    if not isinstance(old_balance, (int, float)):
-        old_balance = 0.0
-    old_balance = float(old_balance)
-
-    if amount > old_balance:
-        if c in ("BTC", "ETH"):
-            avail_str = f"{old_balance:.4f}"
-            req_str = f"{amount:.4f}"
-        else:
-            avail_str = f"{old_balance:.2f}"
-            req_str = f"{amount:.2f}"
-        return f"Недостаточно средств: доступно {avail_str} {c}, требуется {req_str} {c}"
-
-    new_balance = old_balance - amount
-    entry["balance"] = new_balance
-
-    portfolios[idx] = p
-    _write_json(portfolios_path, portfolios)
-
     rate = float(rates[c]) / float(rates[base])
+    result = uc_sell(
+        user_id=user_id,
+        username=username,
+        currency_code=c,
+        amount=amount,
+        rate=rate,
+        base=base,
+    )
+
+    old_balance = float(result.get("before_balance", 0.0))
+    new_balance = float(result.get("after_balance", 0.0))
+
     revenue = amount * rate
 
     if c in ("BTC", "ETH"):
