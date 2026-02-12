@@ -4,6 +4,8 @@ import json
 import secrets
 from datetime import datetime, timedelta
 from pathlib import Path
+from valutatrade_hub.core.exceptions import ApiRequestError, CurrencyNotFoundError, InsufficientFundsError
+
 
 
 def _project_root() -> Path:
@@ -413,8 +415,14 @@ def get_rate(from_currency: str, to_currency: str) -> str:
 
     f = from_currency.strip().upper()
     t = to_currency.strip().upper()
-    if not f.isalnum() or not t.isalnum():
+    if " " in f or " " in t or not (2 <= len(f) <= 5) or not (2 <= len(t) <= 5) or not f.isalnum() or not t.isalnum():
         raise ValueError("invalid currency code")
+
+    base_rates = _exchange_rates()
+    if f not in base_rates:
+        raise CurrencyNotFoundError(f)
+    if t not in base_rates:
+        raise CurrencyNotFoundError(t)
 
     now = datetime.now().replace(microsecond=0)
     cache = _read_json_dict(_rates_path())
@@ -438,21 +446,25 @@ def get_rate(from_currency: str, to_currency: str) -> str:
             updated_at = cached_dt
 
     if rate is None:
-        base_rates = _exchange_rates()
-        if f in base_rates and t in base_rates and base_rates[t] != 0:
+        try:
+            if base_rates[t] == 0:
+                raise ApiRequestError("деление на ноль")
             rate = float(base_rates[f]) / float(base_rates[t])
             updated_at = now
             pairs[key] = {"rate": rate, "updated_at": _format_dt(updated_at)}
             cache["pairs"] = pairs
             _write_json(_rates_path(), cache)
-        else:
-            return f"Курс {f}→{t} недоступен. Повторите попытку позже."
+        except ApiRequestError:
+            raise
+        except Exception as e:
+            raise ApiRequestError(str(e))
 
     inv = 1.0 / rate if rate != 0 else 0.0
     return (
         f"Курс {f}→{t}: {rate:.8f} (обновлено: {_format_dt(updated_at)})\n"
         f"Обратный курс {t}→{f}: {inv:.2f}"
     )
+
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -500,51 +512,62 @@ def _pick_arg(primary, opt):
     return opt if opt not in (None, "") else primary
 
 
+def _supported_codes_str() -> str:
+    return ", ".join(sorted(_exchange_rates().keys()))
+
+
 def execute(args) -> str:
-    if args.command == "register":
-        u = _pick_arg(getattr(args, "username", None), getattr(args, "username_opt", None))
-        p = _pick_arg(getattr(args, "password", None), getattr(args, "password_opt", None))
-        if not u or not p:
-            return "Использование: register --username <name> --password <pass>"
-        return register(u, p)
+    try:
+        if args.command == "register":
+            u = _pick_arg(getattr(args, "username", None), getattr(args, "username_opt", None))
+            p = _pick_arg(getattr(args, "password", None), getattr(args, "password_opt", None))
+            if not u or not p:
+                return "Использование: register --username <name> --password <pass>"
+            return register(u, p)
 
-    if args.command == "login":
-        u = _pick_arg(getattr(args, "username", None), getattr(args, "username_opt", None))
-        p = _pick_arg(getattr(args, "password", None), getattr(args, "password_opt", None))
-        if not u or not p:
-            return "Использование: login --username <name> --password <pass>"
-        return login(u, p)
+        if args.command == "login":
+            u = _pick_arg(getattr(args, "username", None), getattr(args, "username_opt", None))
+            p = _pick_arg(getattr(args, "password", None), getattr(args, "password_opt", None))
+            if not u or not p:
+                return "Использование: login --username <name> --password <pass>"
+            return login(u, p)
 
-    if args.command == "show-portfolio":
-        return show_portfolio(args.base)
+        if args.command == "show-portfolio":
+            return show_portfolio(args.base)
 
-    if args.command == "buy":
-        c = _pick_arg(getattr(args, "currency", None), getattr(args, "currency_opt", None))
-        a = _pick_arg(getattr(args, "amount", None), getattr(args, "amount_opt", None))
-        if not c or a in (None, ""):
-            return "Использование: buy --currency <code> --amount <num>"
-        try:
-            a = float(a)
-        except Exception:
-            return "'amount' должен быть положительным числом"
-        return buy(c, a)
+        if args.command == "buy":
+            c = _pick_arg(getattr(args, "currency", None), getattr(args, "currency_opt", None))
+            a = _pick_arg(getattr(args, "amount", None), getattr(args, "amount_opt", None))
+            if not c or a in (None, ""):
+                return "Использование: buy --currency <code> --amount <num>"
+            try:
+                a = float(a)
+            except Exception:
+                return "'amount' должен быть положительным числом"
+            return buy(c, a)
 
-    if args.command == "sell":
-        c = _pick_arg(getattr(args, "currency", None), getattr(args, "currency_opt", None))
-        a = _pick_arg(getattr(args, "amount", None), getattr(args, "amount_opt", None))
-        if not c or a in (None, ""):
-            return "Использование: sell --currency <code> --amount <num>"
-        try:
-            a = float(a)
-        except Exception:
-            return "'amount' должен быть положительным числом"
-        return sell(c, a)
+        if args.command == "sell":
+            c = _pick_arg(getattr(args, "currency", None), getattr(args, "currency_opt", None))
+            a = _pick_arg(getattr(args, "amount", None), getattr(args, "amount_opt", None))
+            if not c or a in (None, ""):
+                return "Использование: sell --currency <code> --amount <num>"
+            try:
+                a = float(a)
+            except Exception:
+                return "'amount' должен быть положительным числом"
+            return sell(c, a)
 
-    if args.command == "get-rate":
-        f = _pick_arg(getattr(args, "from_currency", None), getattr(args, "from_opt", None))
-        t = _pick_arg(getattr(args, "to_currency", None), getattr(args, "to_opt", None))
-        if not f or not t:
-            return "Использование: get-rate --from <code> --to <code>"
-        return get_rate(f, t)
+        if args.command == "get-rate":
+            f = _pick_arg(getattr(args, "from_currency", None), getattr(args, "from_opt", None))
+            t = _pick_arg(getattr(args, "to_currency", None), getattr(args, "to_opt", None))
+            if not f or not t:
+                return "Использование: get-rate --from <code> --to <code>"
+            return get_rate(f, t)
 
-    raise ValueError("unknown command")
+        raise ValueError("unknown command")
+    except InsufficientFundsError as e:
+        return str(e)
+    except CurrencyNotFoundError as e:
+        return f"{str(e)}\nПоддерживаемые коды: {_supported_codes_str()}\nПодсказка: get-rate --from USD --to BTC"
+    except ApiRequestError as e:
+        return f"{str(e)}\nПовторите попытку позже."

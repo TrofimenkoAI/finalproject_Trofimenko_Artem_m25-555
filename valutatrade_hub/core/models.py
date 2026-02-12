@@ -1,7 +1,8 @@
 from __future__ import annotations
-
 import hashlib
 from datetime import datetime
+from valutatrade_hub.core.exceptions import InsufficientFundsError
+
 
 
 class User:
@@ -144,8 +145,16 @@ class Wallet:
         if amount <= 0:
             raise ValueError("amount must be positive")
         if amount > self._balance:
-            raise ValueError("insufficient funds")
+            code = self._currency_code
+            if code in ("BTC", "ETH"):
+                available = f"{self._balance:.4f}"
+                required = f"{amount:.4f}"
+            else:
+                available = f"{self._balance:.2f}"
+                required = f"{amount:.2f}"
+            raise InsufficientFundsError(available=available, required=required, code=code)
         self._balance = self._balance - amount
+
 
     def get_balance_info(self) -> dict:
         return {"currency_code": self._currency_code, "balance": self._balance}
