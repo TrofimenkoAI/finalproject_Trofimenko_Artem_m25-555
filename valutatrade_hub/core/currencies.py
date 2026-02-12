@@ -50,6 +50,7 @@ class CryptoCurrency(Currency):
 _CURRENCIES: dict[str, Currency] = {
     "USD": FiatCurrency("US Dollar", "USD", "United States"),
     "EUR": FiatCurrency("Euro", "EUR", "Eurozone"),
+    "RUB": FiatCurrency("Russian Ruble", "RUB", "Russia"),
     "BTC": CryptoCurrency("Bitcoin", "BTC", "SHA-256", 1.12e12),
     "ETH": CryptoCurrency("Ethereum", "ETH", "Ethash", 3.00e11),
 }

@@ -267,15 +267,15 @@ def buy(currency: str, amount: float) -> str:
     if c not in rates or base not in rates:
         return f"Не удалось получить курс для {c}→{base}"
 
-    rate = float(rates[c]) / float(rates[base])
     result = uc_buy(
         user_id=user_id,
         username=username,
         currency_code=c,
         amount=amount,
-        rate=rate,
-        base=base,
+        base="USD",
     )
+    rate = float(result.get("rate", 0.0))
+
 
     old_balance = float(result.get("before_balance", 0.0))
     new_balance = float(result.get("after_balance", 0.0))
@@ -324,15 +324,15 @@ def sell(currency: str, amount: float) -> str:
     if c not in rates or base not in rates:
         return f"Не удалось получить курс для {c}→{base}"
 
-    rate = float(rates[c]) / float(rates[base])
     result = uc_sell(
         user_id=user_id,
         username=username,
         currency_code=c,
         amount=amount,
-        rate=rate,
-        base=base,
+        base="USD",
     )
+    rate = float(result.get("rate", 0.0))
+
 
     old_balance = float(result.get("before_balance", 0.0))
     new_balance = float(result.get("after_balance", 0.0))

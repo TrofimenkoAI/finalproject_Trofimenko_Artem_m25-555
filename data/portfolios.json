@@ -6,7 +6,10 @@
         "balance": 1.0
       },
       "BTC": {
-        "balance": 1.0
+        "balance": 2.0
+      },
+      "RUB": {
+        "balance": 0.0
       }
     }
   }
