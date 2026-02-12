@@ -213,8 +213,8 @@ class Portfolio:
 
         exchange_rates = {
             "USD": 1.0,
-            "EUR": 1.1,
-            "BTC": 50000.0,
+            "EUR": 1.07,
+            "BTC": 59300.0,
             "ETH": 2500.0,
             "RUB": 0.011,
         }
