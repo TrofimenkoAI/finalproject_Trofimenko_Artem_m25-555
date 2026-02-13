@@ -6,9 +6,34 @@
         "balance": 1.0
       },
       "BTC": {
-        "balance": 2.0
+        "balance": 1.0
       },
       "RUB": {
+        "balance": 0.0
+      }
+    }
+  },
+  {
+    "user_id": 2,
+    "wallets": {
+      "USD": {
+        "balance": 1000.0
+      },
+      "EUR": {
+        "balance": 0.0
+      }
+    }
+  },
+  {
+    "user_id": 3,
+    "wallets": {
+      "USD": {
+        "balance": 100997.0
+      },
+      "EUR": {
+        "balance": 0.0
+      },
+      "BTC": {
         "balance": 0.0
       }
     }

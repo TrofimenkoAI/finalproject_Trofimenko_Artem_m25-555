@@ -74,13 +74,13 @@ class SettingsLoader:
             p = Path(data_dir.strip())
             data_dir_path = p if p.is_absolute() else (root / p)
 
-        ttl = cfg.get("RATES_TTL_SECONDS", cfg.get("rates_ttl_seconds", 300))
+        ttl = cfg.get("RATES_TTL_SECONDS", cfg.get("rates_ttl_seconds", 3000))
         try:
             ttl = int(ttl)
         except Exception:
-            ttl = 300
+            ttl = 3000
         if ttl < 0:
-            ttl = 300
+            ttl = 3000
 
         base = cfg.get("BASE_CURRENCY", cfg.get("base_currency", "USD"))
         if not isinstance(base, str) or not base.strip():

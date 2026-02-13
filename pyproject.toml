@@ -8,8 +8,8 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "requests>=2.31.0"
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -41,9 +41,10 @@ USERS_JSON = "data/users.json"
 PORTFOLIOS_JSON = "data/portfolios.json"
 RATES_JSON = "data/rates.json"
 SESSION_JSON = "data/session.json"
-RATES_TTL_SECONDS = 300
+RATES_TTL_SECONDS = 3000
 BASE_CURRENCY = "USD"
 LOG_DIR = "logs"
 LOG_LEVEL = "INFO"
 LOG_FORMAT = "%(levelname)s %(asctime)s %(message)s"
+EXCHANGE_RATES_JSON = "data/exchange_rates.json"
 

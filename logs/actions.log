@@ -12,3 +12,112 @@ INFO 2026-02-12 21:53:33,405 2026-02-12T21:53:33 BUY user='admin' currency='RUB'
 INFO 2026-02-12 21:53:52,102 2026-02-12T21:53:52 BUY user='admin' currency='RUB' amount=1000.00 base='USD' result=OK balance=1000.00→2000.00
 INFO 2026-02-12 21:54:05,543 2026-02-12T21:54:05 SELL user='admin' currency='RUB' amount=2001.00 base='USD' result=ERROR error_type=InsufficientFundsError error_message='Недостаточно средств: доступно 2000.00 RUB, требуется 2001.00 RUB'
 INFO 2026-02-12 21:54:10,736 2026-02-12T21:54:10 SELL user='admin' currency='RUB' amount=2000.00 base='USD' result=OK balance=2000.00→0.00
+INFO 2026-02-12 23:01:03,332 Starting rates update...
+INFO 2026-02-12 23:01:03,335 2026-02-12T20:01:03Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:01:03,335 2026-02-12T20:01:03Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:01:06,337 2026-02-12T20:01:06Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:01:06,338 2026-02-12T20:01:06Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:01:06,691 2026-02-12T20:01:06Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:01:06,692 2026-02-12T20:01:06Z UPDATE_RATES end result=OK pairs=0 history_inserted=0
+INFO 2026-02-12 23:07:11,306 Starting rates update...
+INFO 2026-02-12 23:07:11,308 2026-02-12T20:07:11Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:07:11,309 2026-02-12T20:07:11Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:07:11,744 2026-02-12T20:07:11Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:07:11,744 2026-02-12T20:07:11Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:07:12,099 2026-02-12T20:07:12Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:07:12,101 2026-02-12T20:07:12Z UPDATE_RATES end result=OK pairs=0 history_inserted=0
+INFO 2026-02-12 23:09:56,461 Starting rates update...
+INFO 2026-02-12 23:09:56,464 2026-02-12T20:09:56Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:09:56,464 2026-02-12T20:09:56Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:10:00,477 2026-02-12T20:10:00Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:10:00,477 2026-02-12T20:10:00Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:10:00,874 2026-02-12T20:10:00Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:10:00,875 2026-02-12T20:10:00Z UPDATE_RATES end result=OK pairs=0 history_inserted=0
+INFO 2026-02-12 23:16:48,932 Starting rates update...
+INFO 2026-02-12 23:16:48,934 2026-02-12T20:16:48Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:16:48,934 2026-02-12T20:16:48Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:16:49,387 2026-02-12T20:16:49Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:16:49,388 2026-02-12T20:16:49Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:16:49,800 2026-02-12T20:16:49Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:16:49,809 2026-02-12T20:16:49Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-12 23:17:43,721 2026-02-12T23:17:43 SELL user='admin' currency='BTC' amount=2.0000 base='USD' result=OK balance=2.0000→0.0000
+INFO 2026-02-12 23:18:03,625 Starting rates update...
+INFO 2026-02-12 23:18:03,627 2026-02-12T20:18:03Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:18:03,627 2026-02-12T20:18:03Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:18:04,062 2026-02-12T20:18:04Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:18:04,062 2026-02-12T20:18:04Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:18:04,414 2026-02-12T20:18:04Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:18:04,424 2026-02-12T20:18:04Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-12 23:18:23,439 2026-02-12T23:18:23 BUY user='admin' currency='BTC' amount=1.0000 base='USD' result=OK balance=0.0000→1.0000
+INFO 2026-02-12 23:30:00,350 2026-02-12T23:30:00 SELL user='admin' currency='BTC' amount=1.0000 base='USD' result=ERROR error_type=TypeError error_message='can't subtract offset-naive and offset-aware datetimes'
+INFO 2026-02-12 23:32:54,834 Starting rates update...
+INFO 2026-02-12 23:32:54,837 2026-02-12T20:32:54Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:32:54,837 2026-02-12T20:32:54Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:32:55,662 2026-02-12T20:32:55Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:32:55,662 2026-02-12T20:32:55Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:32:56,054 2026-02-12T20:32:56Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:32:56,066 2026-02-12T20:32:56Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-12 23:33:23,457 2026-02-12T23:33:23 BUY user='admin' currency='BTC' amount=1.0000 base='USD' result=OK balance=0.0000→1.0000
+INFO 2026-02-12 23:33:40,244 2026-02-12T23:33:40 SELL user='admin' currency='BTC' amount=1.0000 base='USD' result=ERROR error_type=ApiRequestError error_message='Ошибка при обращении к внешнему API: rates unavailable'
+INFO 2026-02-12 23:52:21,999 2026-02-12T23:52:21 BUY user='admin' currency='BTC' amount=1.0000 base='USD' result=ERROR error_type=ApiRequestError error_message='Ошибка при обращении к внешнему API: Локальный кеш курсов устарел. Выполните update-rates.'
+INFO 2026-02-12 23:52:29,911 Starting rates update...
+INFO 2026-02-12 23:52:29,911 2026-02-12T20:52:29Z UPDATE_RATES start clients=2
+INFO 2026-02-12 23:52:29,912 2026-02-12T20:52:29Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-12 23:52:30,347 2026-02-12T20:52:30Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-12 23:52:30,348 2026-02-12T20:52:30Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-12 23:52:30,662 2026-02-12T20:52:30Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-12 23:52:30,674 2026-02-12T20:52:30Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-12 23:52:38,527 2026-02-12T23:52:38 BUY user='admin' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→2.0000
+INFO 2026-02-12 23:53:09,302 2026-02-12T23:53:09 SELL user='admin' currency='BTC' amount=1.0000 base='USD' result=ERROR error_type=ApiRequestError error_message='Ошибка при обращении к внешнему API: rates unavailable'
+INFO 2026-02-13 10:53:04,449 2026-02-13T10:53:04 BUY user='adm' currency='USD' amount=1.00 base='USD' result=ERROR error_type=ApiRequestError error_message='Ошибка при обращении к внешнему API: Локальный кеш курсов устарел. Выполните update-rates.'
+INFO 2026-02-13 10:54:32,684 Starting rates update...
+INFO 2026-02-13 10:54:32,686 2026-02-13T07:54:32Z UPDATE_RATES start clients=2
+INFO 2026-02-13 10:54:32,686 2026-02-13T07:54:32Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 10:54:33,318 2026-02-13T07:54:33Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 10:54:33,318 2026-02-13T07:54:33Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 10:54:33,662 2026-02-13T07:54:33Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 10:54:33,673 2026-02-13T07:54:33Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 10:54:43,853 2026-02-13T10:54:43 BUY user='adm' currency='USD' amount=1.00 base='USD' result=OK balance=1.00→2.00
+INFO 2026-02-13 10:54:50,002 2026-02-13T10:54:50 SELL user='adm' currency='USD' amount=1.00 base='USD' result=OK balance=2.00→1.00
+INFO 2026-02-13 10:54:57,281 2026-02-13T10:54:57 BUY user='adm' currency='USD' amount=1.50 base='USD' result=OK balance=1.00→2.50
+INFO 2026-02-13 10:55:01,311 2026-02-13T10:55:01 SELL user='adm' currency='USD' amount=2.50 base='USD' result=OK balance=2.50→0.00
+INFO 2026-02-13 11:35:07,307 2026-02-13T11:35:07 BUY user='adm' currency='EUR' amount=1.00 base='USD' result=OK balance=0.00→1.00
+INFO 2026-02-13 12:18:04,623 2026-02-13T12:18:04 SELL user='adm' currency='EUR' amount=1.00 base='USD' result=ERROR error_type=ApiRequestError error_message='Ошибка при обращении к внешнему API: Локальный кеш курсов устарел. Выполните update-rates.'
+INFO 2026-02-13 12:18:12,310 Starting rates update...
+INFO 2026-02-13 12:18:12,311 2026-02-13T09:18:12Z UPDATE_RATES start clients=2
+INFO 2026-02-13 12:18:12,311 2026-02-13T09:18:12Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 12:18:12,744 2026-02-13T09:18:12Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 12:18:12,744 2026-02-13T09:18:12Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 12:18:13,062 2026-02-13T09:18:13Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 12:18:13,074 2026-02-13T09:18:13Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 12:18:19,540 2026-02-13T12:18:19 SELL user='adm' currency='EUR' amount=1.00 base='USD' result=OK balance=1.00→0.00
+INFO 2026-02-13 12:33:14,563 Starting rates update...
+INFO 2026-02-13 12:33:14,565 2026-02-13T09:33:14Z UPDATE_RATES start clients=2
+INFO 2026-02-13 12:33:14,565 2026-02-13T09:33:14Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 12:33:14,993 2026-02-13T09:33:14Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 12:33:14,994 2026-02-13T09:33:14Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 12:33:15,359 2026-02-13T09:33:15Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 12:33:15,371 2026-02-13T09:33:15Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 12:33:42,462 2026-02-13T12:33:42 DEPOSIT_USD user='adm' currency='?' amount=1000.00 result=OK balance=0.00→1000.00
+INFO 2026-02-13 12:33:50,444 2026-02-13T12:33:50 BUY user='adm' currency='EUR' amount=500.00 base='USD' result=OK balance=0.00→500.00
+INFO 2026-02-13 12:34:00,444 2026-02-13T12:34:00 SELL user='adm' currency='EUR' amount=500.00 base='USD' result=OK balance=500.00→0.00
+INFO 2026-02-13 12:39:24,946 Starting rates update...
+INFO 2026-02-13 12:39:24,948 2026-02-13T09:39:24Z UPDATE_RATES start clients=2
+INFO 2026-02-13 12:39:24,948 2026-02-13T09:39:24Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 12:39:25,405 2026-02-13T09:39:25Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 12:39:25,405 2026-02-13T09:39:25Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 12:39:25,713 2026-02-13T09:39:25Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 12:39:25,724 2026-02-13T09:39:25Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 12:39:47,784 2026-02-13T12:39:47 DEPOSIT_USD user='test' currency='?' amount=1000.00 result=OK balance=0.00→1000.00
+INFO 2026-02-13 12:39:55,643 2026-02-13T12:39:55 BUY user='test' currency='EUR' amount=1.00 base='USD' result=OK balance=0.00→1.00
+INFO 2026-02-13 12:40:10,477 2026-02-13T12:40:10 SELL user='test' currency='EUR' amount=1.00 base='USD' result=OK balance=1.00→0.00
+INFO 2026-02-13 12:40:41,540 2026-02-13T12:40:41 DEPOSIT_USD user='test' currency='?' amount=100000.00 result=OK balance=1000.00→101000.00
+INFO 2026-02-13 12:40:48,065 2026-02-13T12:40:48 BUY user='test' currency='BTC' amount=1.0000 base='USD' result=OK balance=0.0000→1.0000
+INFO 2026-02-13 12:40:55,808 Starting rates update...
+INFO 2026-02-13 12:40:55,811 2026-02-13T09:40:55Z UPDATE_RATES start clients=2
+INFO 2026-02-13 12:40:55,811 2026-02-13T09:40:55Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 12:40:56,178 2026-02-13T09:40:56Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 12:40:56,178 2026-02-13T09:40:56Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 12:40:56,460 2026-02-13T09:40:56Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 12:40:56,470 2026-02-13T09:40:56Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 12:41:07,431 2026-02-13T12:41:07 SELL user='test' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
