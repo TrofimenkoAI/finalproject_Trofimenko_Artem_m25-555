@@ -123,3 +123,25 @@ INFO 2026-02-13 12:40:56,470 2026-02-13T09:40:56Z UPDATE_RATES end result=OK pai
 INFO 2026-02-13 12:41:07,431 2026-02-13T12:41:07 SELL user='test' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
 INFO 2026-02-13 12:51:45,406 2026-02-13T12:51:45 SELL user='admin' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
 INFO 2026-02-13 12:51:56,518 2026-02-13T12:51:56 CASH_OUT_USD user='admin' currency='?' amount=66801.00 result=OK balance=66801.00→0.00
+INFO 2026-02-13 13:18:42,148 Starting rates update...
+INFO 2026-02-13 13:18:42,151 2026-02-13T10:18:42Z UPDATE_RATES start clients=2
+INFO 2026-02-13 13:18:42,151 2026-02-13T10:18:42Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 13:18:42,592 2026-02-13T10:18:42Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 13:18:42,593 2026-02-13T10:18:42Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 13:18:42,934 2026-02-13T10:18:42Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 13:18:42,948 2026-02-13T10:18:42Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 13:19:01,447 2026-02-13T13:19:01 DEPOSIT_USD user='user' currency='?' amount=1000.00 result=OK balance=0.00→1000.00
+INFO 2026-02-13 13:19:23,964 2026-02-13T13:19:23 BUY user='user' currency='EUR' amount=1.00 base='USD' result=OK balance=0.00→1.00
+INFO 2026-02-13 13:19:31,470 2026-02-13T13:19:31 SELL user='user' currency='EUR' amount=1.00 base='USD' result=OK balance=1.00→0.00
+INFO 2026-02-13 13:19:51,580 2026-02-13T13:19:51 BUY user='user' currency='BTC' amount=1.0000 base='USD' result=ERROR error_type=InsufficientFundsError error_message='Недостаточно средств: доступно 1000.00 USD, требуется 66889.00 USD'
+INFO 2026-02-13 13:19:58,097 2026-02-13T13:19:58 DEPOSIT_USD user='user' currency='?' amount=100000.00 result=OK balance=1000.00→101000.00
+INFO 2026-02-13 13:20:01,262 2026-02-13T13:20:01 BUY user='user' currency='BTC' amount=1.0000 base='USD' result=OK balance=0.0000→1.0000
+INFO 2026-02-13 13:20:08,137 Starting rates update...
+INFO 2026-02-13 13:20:08,138 2026-02-13T10:20:08Z UPDATE_RATES start clients=2
+INFO 2026-02-13 13:20:08,138 2026-02-13T10:20:08Z UPDATE_RATES client_start source='CoinGecko'
+INFO 2026-02-13 13:20:08,573 2026-02-13T10:20:08Z UPDATE_RATES client_ok source='CoinGecko' pairs=3
+INFO 2026-02-13 13:20:08,573 2026-02-13T10:20:08Z UPDATE_RATES client_start source='ExchangeRate-API'
+INFO 2026-02-13 13:20:08,862 2026-02-13T10:20:08Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
+INFO 2026-02-13 13:20:08,875 2026-02-13T10:20:08Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
+INFO 2026-02-13 13:20:14,956 2026-02-13T13:20:14 SELL user='user' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
+INFO 2026-02-13 13:20:25,738 2026-02-13T13:20:25 CASH_OUT_USD user='user' currency='?' amount=101051.00 result=OK balance=101051.00→0.00

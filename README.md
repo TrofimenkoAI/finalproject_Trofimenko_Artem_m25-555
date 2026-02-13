@@ -11,7 +11,7 @@
 - `make install`
 - `make project`
 
-Для актуализации курсов, необходимо установить переменные окружения с API-ключами для их парсинга:
+Для актуализации курсов, необходимо установить переменные окружения с API-ключами для их парсинга (заменить вместе со звёздочками):
 
 - `export EXCHANGERATE_API_KEY="*ваш ключ*"`
 - `export COINGECKO_API_KEY="*ваш ключ*"`
@@ -32,4 +32,8 @@
 - `show-rates` — показать содержимое кеша курсов
 - `exit/quit` — выход
 
+У любой команды есть флаг `--help`, который выводит справку по синтаксису.
+
 ## Демонстрация (asciinema)
+
+[![asciicast](https://asciinema.org/a/Zv2lrx0eLcoVReFz.svg)](https://asciinema.org/a/Zv2lrx0eLcoVReFz?autoplay=1)
