@@ -121,3 +121,5 @@ INFO 2026-02-13 12:40:56,178 2026-02-13T09:40:56Z UPDATE_RATES client_start sour
 INFO 2026-02-13 12:40:56,460 2026-02-13T09:40:56Z UPDATE_RATES client_ok source='ExchangeRate-API' pairs=3
 INFO 2026-02-13 12:40:56,470 2026-02-13T09:40:56Z UPDATE_RATES end result=OK pairs=6 history_inserted=6
 INFO 2026-02-13 12:41:07,431 2026-02-13T12:41:07 SELL user='test' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
+INFO 2026-02-13 12:51:45,406 2026-02-13T12:51:45 SELL user='admin' currency='BTC' amount=1.0000 base='USD' result=OK balance=1.0000→0.0000
+INFO 2026-02-13 12:51:56,518 2026-02-13T12:51:56 CASH_OUT_USD user='admin' currency='?' amount=66801.00 result=OK balance=66801.00→0.00
